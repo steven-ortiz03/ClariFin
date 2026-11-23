@@ -1,0 +1,37 @@
+node_modules/
+frontend/dist/
+.env
+.env.*
+!.env.example
+*.log
+.runtime/
+
+# Credenciales locales y material criptográfico
+.npmrc
+.netrc
+_netrc
+.git-credentials
+credentials/
+secrets/
+credentials.json
+credentials-*.json
+client_secret*.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Archivos de trabajo locales
+*.tmp
+*.temp
+*.bak
+*.swp
+*.local
+.vscode/
+.idea/
+coverage/
+Thumbs.db
+.DS_Store

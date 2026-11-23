@@ -1,0 +1,22 @@
+{
+  "name": "gestion-financiera-personal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "iniciar": "node scripts/iniciar.js",
+    "detener": "node scripts/detener.js",
+    "build": "npm run build -w frontend",
+    "start": "node --env-file-if-exists=.env backend/src/server.js",
+    "migrate": "node --env-file-if-exists=.env database/migrate.js",
+    "test": "node --env-file-if-exists=.env backend/tests/run.js",
+    "test:ui": "node --env-file-if-exists=.env backend/tests/browser.js"
+  }
+}

@@ -1,0 +1,35 @@
+# Uso: docker compose up --build   (no necesita .env; los valores por defecto son solo para uso local)
+services:
+  db:
+    image: mysql:8.4
+    command: ["--innodb-buffer-pool-size=64M", "--performance-schema=OFF", "--max-connections=40"]
+    environment:
+      MYSQL_DATABASE: gestion_financiera
+      MYSQL_USER: finanzas
+      MYSQL_PASSWORD: ${DB_PASSWORD:-finanzas-local-cambiame}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root-local-cambiame}
+    volumes:
+      - datos:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+  app:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: gestion_financiera
+      DB_USER: finanzas
+      DB_PASSWORD: ${DB_PASSWORD:-finanzas-local-cambiame}
+      APP_ORIGIN: http://localhost:${PORT:-4178}
+      PORT: 4178
+      COOKIE_SECURE: "false"
+    ports:
+      - "127.0.0.1:${PORT:-4178}:4178"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  datos:
